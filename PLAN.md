@@ -26,3 +26,7 @@ A plan to explore Mars!
 - Return
   - Current situation.
   - Success ?
+
+
+Nice to have:
+- Show Explored % of the grids
