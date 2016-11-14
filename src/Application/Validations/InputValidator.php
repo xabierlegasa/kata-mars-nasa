@@ -35,13 +35,22 @@ class InputValidator
             return false;
         }
 
-        $x = $parts[0];
-        $y = $parts[1];
-
-        if ($this->isNotValid)
-
-
+        if (!$this->isValidCoordinate($parts[0]) || !$this->isValidCoordinate($parts[1])) {
+            return false;
+        }
 
         return true;
+    }
+
+    /**
+     * @param string $coordinate
+     * @return bool
+     */
+    private function isValidCoordinate($coordinate)
+    {
+        return (is_numeric($coordinate)
+            && ctype_digit($coordinate)
+            && $coordinate > 0
+        );
     }
 }

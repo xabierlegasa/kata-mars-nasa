@@ -47,8 +47,13 @@ class InputValidatorTest extends \PHPUnit_Framework_TestCase
     public static function coordinatesInputProviders()
     {
         return [
-            ['5 5', true, ''],
-            ['something', false, 'Invalid upper-right coordinates']
+            ['7 7', true, ''],
+            ['something', false, 'Invalid upper-right coordinates'],
+            ['0 7', false, 'Invalid upper-right coordinates'],
+            ['7 0', false, 'Invalid upper-right coordinates'],
+            ['0 0', false, 'Invalid upper-right coordinates'],
+            ['7 2.2', false, 'Invalid upper-right coordinates'],
+            ['7 2,2', false, 'Invalid upper-right coordinates']
         ];
     }
 }
