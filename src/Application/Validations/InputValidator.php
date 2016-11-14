@@ -6,16 +6,17 @@ namespace KataMarsNasa\Application\Validations;
 class InputValidator
 {
     /**
-     * @param $input
+     * Takes a non associative array of order-lines and return true if it is a valid plan, or false otherwise
+     * @param array $input An array of lines
      * @return bool
      */
-    public function validate($input)
+    public function validate(array $input)
     {
         if (empty($input)) {
             return $this->invalidBecause('Input can not be empty');
         }
 
-        if (!$this->isValidCoordinates($input)) {
+        if (!$this->isValidCoordinates($input[0])) {
             return $this->invalidBecause('Invalid upper-right coordinates');
         }
 
@@ -27,6 +28,10 @@ class InputValidator
         return new InputValidationResult(false, $reason);
     }
 
+    /**
+     * @param string $line
+     * @return bool
+     */
     private function isValidCoordinates($line)
     {
         $parts = explode(' ', $line);
