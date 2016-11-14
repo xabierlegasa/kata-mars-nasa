@@ -2,7 +2,10 @@
 
 A plan to explore Mars!
 
-- check text input is valid ( space, lines...)
+- check text input is valid
+    - Correct number of lines.
+    - Coordinates are valid
+    - Rover info is valid (x N lines)
 - check if file is valid (just reuse code from previous point)
 - Check that no squad overlap each other
 
