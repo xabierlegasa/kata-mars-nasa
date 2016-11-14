@@ -3,6 +3,7 @@
 A plan to explore Mars!
 
 - check text input is valid
+    - Is not empty
     - Correct number of lines.
     - Coordinates are valid
     - Rover info is valid (x N lines)
