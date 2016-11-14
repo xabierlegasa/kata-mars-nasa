@@ -19,6 +19,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Kata\\": "src/",
             "Tests\\": "tests/"
         }
     },
