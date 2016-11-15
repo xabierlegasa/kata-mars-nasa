@@ -7,6 +7,7 @@ use KataMarsNasa\Application\Validations\InitialValidator;
 use KataMarsNasa\Application\Validations\RoversMovementsValidator;
 use KataMarsNasa\Application\Validations\RoversPositionValidator;
 use KataMarsNasa\Domain\Services\InputToPlanTransformer;
+use KataMarsNasa\Domain\Services\InputToPlateauSizeConverter;
 use KataMarsNasa\Domain\UseCases\ExploreMarsUseCase;
 
 $container = $app->getContainer();
@@ -47,9 +48,7 @@ $container['RoversPositionValidator'] = function ($c) {
 $container['InputToPlanTransformer'] = function ($c) {
     return new InputToPlanTransformer(
         $c->get('InitialValidator'),
-        $c->get('CoordinateValidator'),
-        $c->get('RoversMovementsValidator'),
-        $c->get('RoversPositionValidator')
+        $c->get('InputToPlateauSizeConverter')
     );
 };
 
@@ -59,5 +58,8 @@ $container['ExploreMarsUseCase'] = function ($c) {
     );
 };
 
-
-
+$container['InputToPlateauSizeConverter'] = function ($c) {
+    return new InputToPlateauSizeConverter(
+        $c->get('CoordinateValidator')
+    );
+};

@@ -5,8 +5,6 @@ namespace KataMarsNasa\Domain\Services;
 
 use KataMarsNasa\Application\Validations\CoordinateValidator;
 use KataMarsNasa\Application\Validations\InitialValidator;
-use KataMarsNasa\Application\Validations\RoversMovementsValidator;
-use KataMarsNasa\Application\Validations\RoversPositionValidator;
 use KataMarsNasa\Domain\Entities\Plan;
 
 class InputToPlanTransformer
@@ -21,32 +19,29 @@ class InputToPlanTransformer
      */
     private $initialValidator;
     /**
-     * @var RoversMovementsValidator
+     * @var InputToPlateauSizeConverter
      */
-    private $roversMovementsValidator;
-    /**
-     * @var RoversPositionValidator
-     */
-    private $roversPositionValidator;
+    private $inputToPlateauSizeConverter;
 
     /**
      * InputToPlanTransformer constructor.
      * @param InitialValidator $initialValidator
-     * @param RoversMovementsValidator $roversMovementsValidator
-     * @param RoversPositionValidator $roversPositionValidator
+     * @param InputToPlateauSizeConverter $inputToPlateauSizeConverter
+     * @param InputToRoversPositionConverter $inputToRoversPositionConverter
      */
     public function __construct(
         InitialValidator $initialValidator,
-        RoversMovementsValidator $roversMovementsValidator,
-        RoversPositionValidator $roversPositionValidator
+        InputToPlateauSizeConverter $inputToPlateauSizeConverter,
+        InputToRoversPositionConverter $inputToRoversPositionConverter
     ) {
         $this->initialValidator = $initialValidator;
-        $this->roversMovementsValidator = $roversMovementsValidator;
-        $this->roversPositionValidator = $roversPositionValidator;
+        $this->inputToPlateauSizeConverter = $inputToPlateauSizeConverter;
+        $this->inputToRoversPositionConverter = $inputToRoversPositionConverter;
     }
 
     /**
      * @param array $input
+     * @return Plan
      */
     public function transform(array $input)
     {
@@ -55,22 +50,20 @@ class InputToPlanTransformer
         }
 
         $plateauSizeLine = trim(reset($input));
+        $plateauSize = $this->inputToPlateauSizeConverter->convert($plateauSizeLine);
 
 
-        $plateauSize = $this->
+
+
+
+
+
 
 
         $plan = new Plan();
-        $plan->setPlateauSize();
+        $plan->setPlateauSize($plateauSize);
 
 
-
-        var_dump($input);
-
-
-        var_dump($plateauSizeLine);
-        var_dump($input);
-
-        die;
+        return $plan;
     }
 }
