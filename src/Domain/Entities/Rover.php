@@ -8,14 +8,36 @@ class Rover
     /**
      * @var Position
      */
-    private $roversPosition;
+    private $position;
+    /**
+     * @var RoverMovements
+     */
+    private $movements;
 
     /**
      * Rover constructor.
-     * @param Position $roversPosition
+     * @param Position $position
+     * @param RoverMovements $movements
      */
-    public function __construct(Position $roversPosition)
+    public function __construct(Position $position, RoverMovements $movements)
     {
-        $this->roversPosition = $roversPosition;
+        $this->roversPosition = $position;
+        $this->movements = $movements;
+    }
+
+    /**
+     * @return RoverMovements
+     */
+    public function movements()
+    {
+        return $this->movements;
+    }
+
+    /**
+     * @return Position
+     */
+    public function position()
+    {
+        return $this->position;
     }
 }
