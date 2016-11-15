@@ -1,10 +1,18 @@
 <?php
 // DIC configuration
 
+use KataMarsNasa\Application\Controllers\StartController;
+use KataMarsNasa\Application\Validations\CoordinateValidator;
+use KataMarsNasa\Application\Validations\InitialValidator;
+use KataMarsNasa\Application\Validations\RoversMovementsValidator;
+use KataMarsNasa\Application\Validations\RoversPositionValidator;
+use KataMarsNasa\Domain\Services\InputToPlanTransformer;
+use KataMarsNasa\Domain\UseCases\ExploreMarsUseCase;
+
 $container = $app->getContainer();
 
 // view renderer
-$container['renderer'] = function ($c) {
+$container['view'] = function ($c) {
     $settings = $c->get('settings')['renderer'];
     return new Slim\Views\PhpRenderer($settings['template_path']);
 };
@@ -17,3 +25,39 @@ $container['logger'] = function ($c) {
     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
     return $logger;
 };
+
+$container['StartController'] = function ($c) {
+    return new StartController($c);
+};
+
+
+$container['InitialValidator'] = function ($c) {
+    return new InitialValidator();
+};
+$container['CoordinateValidator'] = function ($c) {
+    return new CoordinateValidator();
+};
+$container['RoversMovementsValidator'] = function ($c) {
+    return new RoversMovementsValidator();
+};
+$container['RoversPositionValidator'] = function ($c) {
+    return new RoversPositionValidator();
+};
+
+$container['InputToPlanTransformer'] = function ($c) {
+    return new InputToPlanTransformer(
+        $c->get('InitialValidator'),
+        $c->get('CoordinateValidator'),
+        $c->get('RoversMovementsValidator'),
+        $c->get('RoversPositionValidator')
+    );
+};
+
+$container['ExploreMarsUseCase'] = function ($c) {
+    return new ExploreMarsUseCase(
+        $c->get('InputToPlanTransformer')
+    );
+};
+
+
+
