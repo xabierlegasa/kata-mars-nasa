@@ -14,10 +14,12 @@ class RoversPosition
      * @var int
      */
     private $x;
+
     /**
      * @var int
      */
     private $y;
+
     /**
      * Can be one of the constants defined in RoversPosition class
      * @var string
