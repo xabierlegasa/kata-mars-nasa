@@ -8,6 +8,7 @@ use KataMarsNasa\Application\Validations\RoversMovementsValidator;
 use KataMarsNasa\Application\Validations\RoversPositionValidator;
 use KataMarsNasa\Domain\Services\InputToPlanTransformer;
 use KataMarsNasa\Domain\Services\InputToPlateauSizeConverter;
+use KataMarsNasa\Domain\Services\InputToRoverMovementsConverter;
 use KataMarsNasa\Domain\UseCases\ExploreMarsUseCase;
 
 $container = $app->getContainer();
@@ -61,5 +62,11 @@ $container['ExploreMarsUseCase'] = function ($c) {
 $container['InputToPlateauSizeConverter'] = function ($c) {
     return new InputToPlateauSizeConverter(
         $c->get('CoordinateValidator')
+    );
+};
+
+$container['InputToRoverMovementsConverter'] = function ($c) {
+    return new InputToRoverMovementsConverter(
+        $c->get('RoversMovementsValidator')
     );
 };

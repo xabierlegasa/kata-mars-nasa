@@ -4,7 +4,7 @@ namespace KataMarsNasa\Domain\Services;
 
 use KataMarsNasa\Application\Validations\RoversPositionValidator;
 use KataMarsNasa\Domain\Entities\PlateauSize;
-use KataMarsNasa\Domain\Entities\RoversPosition;
+use KataMarsNasa\Domain\Entities\Position;
 
 class InputToRoversPositionConverter
 {
@@ -35,6 +35,6 @@ class InputToRoversPositionConverter
 
         $parts = explode(' ', $line);
 
-        return new RoversPosition($parts[0], $parts[1], $parts[2]);
+        return new Position($parts[0], $parts[1], $parts[2]);
     }
 }

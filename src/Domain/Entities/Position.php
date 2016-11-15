@@ -3,7 +3,7 @@
 namespace KataMarsNasa\Domain\Entities;
 
 
-class RoversPosition
+class Position
 {
     const DIRECTION_NORTH = 'N';
     const DIRECTION_SOUTH = 'S';
@@ -21,13 +21,13 @@ class RoversPosition
     private $y;
 
     /**
-     * Can be one of the constants defined in RoversPosition class
+     * Can be one of the constants defined in Position class
      * @var string
      */
     private $direction;
 
     /**
-     * RoversPosition constructor.
+     * Position constructor.
      * @param int $x
      * @param int $y
      * @param string $direction

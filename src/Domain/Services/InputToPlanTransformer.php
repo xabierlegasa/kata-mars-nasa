@@ -23,20 +23,26 @@ class InputToPlanTransformer
      */
     private $inputToPlateauSizeConverter;
 
+    /** @var InputToRoverMovementsConverter  */
+    private $inputToRoverMovementsConverter;
+
     /**
      * InputToPlanTransformer constructor.
      * @param InitialValidator $initialValidator
      * @param InputToPlateauSizeConverter $inputToPlateauSizeConverter
      * @param InputToRoversPositionConverter $inputToRoversPositionConverter
+     * @param InputToRoverMovementsConverter $inputToRoverMovementsConverter
      */
     public function __construct(
         InitialValidator $initialValidator,
         InputToPlateauSizeConverter $inputToPlateauSizeConverter,
-        InputToRoversPositionConverter $inputToRoversPositionConverter
+        InputToRoversPositionConverter $inputToRoversPositionConverter,
+        InputToRoverMovementsConverter $inputToRoverMovementsConverter
     ) {
         $this->initialValidator = $initialValidator;
         $this->inputToPlateauSizeConverter = $inputToPlateauSizeConverter;
         $this->inputToRoversPositionConverter = $inputToRoversPositionConverter;
+        $this->inputToRoverMovementsConverter = $inputToRoverMovementsConverter;
     }
 
     /**
@@ -51,6 +57,26 @@ class InputToPlanTransformer
 
         $plateauSizeLine = trim(reset($input));
         $plateauSize = $this->inputToPlateauSizeConverter->convert($plateauSizeLine);
+
+        for ($x = 0; $x < count($input); $x = $x + 2) {
+            /** Rovers starting coordinates */
+            $lineCoordinates = $input[$x];
+
+            $lineMovements = $input[$x+1];
+
+        }
+
+
+//        foreach($input as $line) {
+//
+//            if () { // for rover position
+//                $this->inputToRoverMovementsConverter->convert()
+//
+//            } else { // add rover
+//
+//            }
+//        }
+
 
 
 

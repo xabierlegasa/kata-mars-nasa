@@ -5,7 +5,7 @@ namespace Unit\Domain\Services;
 
 use KataMarsNasa\Application\Validations\RoversPositionValidator;
 use KataMarsNasa\Domain\Entities\PlateauSize;
-use KataMarsNasa\Domain\Entities\RoversPosition;
+use KataMarsNasa\Domain\Entities\Position;
 use KataMarsNasa\Domain\Services\InputToRoversPositionConverter;
 
 class InputToRoversPositionConverterTest extends \PHPUnit_Framework_TestCase
@@ -34,10 +34,10 @@ class InputToRoversPositionConverterTest extends \PHPUnit_Framework_TestCase
             ->shouldBeCalled()
             ->willReturn(true);
 
-        /** @var RoversPosition $result */
+        /** @var Position $result */
         $roversPosition = $this->sut->convert($input, $plateauSize);
 
-        $this->assertInstanceOf(RoversPosition::class, $roversPosition);
+        $this->assertInstanceOf(Position::class, $roversPosition);
         $this->assertEquals(3, $roversPosition->x());
         $this->assertEquals(4, $roversPosition->y());
         $this->assertEquals('N', $roversPosition->direction());
