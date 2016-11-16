@@ -5,20 +5,8 @@ namespace KataMarsNasa\Domain\Entities;
 
 class Position
 {
-    const DIRECTION_NORTH = 'N';
-    const DIRECTION_SOUTH = 'S';
-    const DIRECTION_EAST = 'E';
-    const DIRECTION_WEST = 'W';
-
-    /**
-     * @var int
-     */
-    private $x;
-
-    /**
-     * @var int
-     */
-    private $y;
+    /** @var Coordinate */
+    private $coordinate;
 
     /**
      * Can be one of the constants defined in Position class
@@ -28,14 +16,12 @@ class Position
 
     /**
      * Position constructor.
-     * @param int $x
-     * @param int $y
+     * @param Coordinate $coordinate
      * @param string $direction
      */
-    public function __construct($x, $y, $direction)
+    public function __construct(Coordinate $coordinate, $direction)
     {
-        $this->x = $x;
-        $this->y = $y;
+        $this->coordinate = $coordinate;
         $this->direction = $direction;
     }
 
@@ -44,7 +30,7 @@ class Position
      */
     public function x()
     {
-        return $this->x;
+        return $this->coordinate->x();
     }
 
     /**
@@ -52,7 +38,7 @@ class Position
      */
     public function y()
     {
-        return $this->y;
+        return $this->coordinate->y();
     }
 
     /**
@@ -61,5 +47,10 @@ class Position
     public function direction()
     {
         return $this->direction;
+    }
+
+    public function coordinate()
+    {
+        return $this->coordinate;
     }
 }

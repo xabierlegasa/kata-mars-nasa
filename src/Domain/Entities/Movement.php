@@ -25,4 +25,19 @@ class Movement
     {
         return $this->movement;
     }
+
+    public function willMoveForward()
+    {
+        return $this->movement === self::MOVE;
+    }
+
+    public function willFlipRight()
+    {
+        return $this->movement === self::RIGHT;
+    }
+
+    public function willFlipLeft()
+    {
+        return $this->movement === self::LEFT;
+    }
 }

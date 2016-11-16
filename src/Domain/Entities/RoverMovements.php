@@ -20,4 +20,13 @@ class RoverMovements
     {
         return $this->movements;
     }
+
+    /**
+     * @param int $movementNumber
+     * @return Movement
+     */
+    public function getMovement($movementNumber)
+    {
+        return $this->movements[$movementNumber];
+    }
 }

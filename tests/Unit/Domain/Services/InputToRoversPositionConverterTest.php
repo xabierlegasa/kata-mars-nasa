@@ -34,13 +34,13 @@ class InputToRoversPositionConverterTest extends \PHPUnit_Framework_TestCase
             ->shouldBeCalled()
             ->willReturn(true);
 
-        /** @var Position $result */
-        $roversPosition = $this->sut->convert($input, $plateauSize);
+        /** @var Position $position */
+        $position = $this->sut->convert($input, $plateauSize);
 
-        $this->assertInstanceOf(Position::class, $roversPosition);
-        $this->assertEquals(3, $roversPosition->x());
-        $this->assertEquals(4, $roversPosition->y());
-        $this->assertEquals('N', $roversPosition->direction());
+        $this->assertInstanceOf(Position::class, $position);
+        $this->assertEquals(3, $position->x());
+        $this->assertEquals(4, $position->y());
+        $this->assertEquals('N', $position->direction());
     }
 
 

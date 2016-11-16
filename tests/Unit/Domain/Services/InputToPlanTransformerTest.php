@@ -4,6 +4,7 @@ namespace Unit\Domain\Services;
 
 
 use KataMarsNasa\Application\Validations\InitialValidator;
+use KataMarsNasa\Domain\Entities\Coordinate;
 use KataMarsNasa\Domain\Entities\Movement;
 use KataMarsNasa\Domain\Entities\Plan;
 use KataMarsNasa\Domain\Entities\PlateauSize;
@@ -63,7 +64,7 @@ class InputToPlanTransformerTest extends \PHPUnit_Framework_TestCase
             ->willReturn($plateauSize);
 
         $this->inputToRoversPositionConverter->convert('1 2 N', $plateauSize)->shouldBeCalled()
-            ->willReturn(new Position(1, 2, 'N'));
+            ->willReturn(new Position(new Coordinate(1, 2), 'N'));
         $this->inputToRoverMovementsConverter->convert('RLM')->shouldBeCalled()
             ->willReturn(new RoverMovements([new Movement('R'), new Movement('L'), new Movement('M')]));
 
