@@ -3,6 +3,7 @@
 namespace KataMarsNasa\Domain\UseCases;
 
 
+use KataMarsNasa\Domain\Entities\Mission;
 use KataMarsNasa\Domain\Services\InputToPlanTransformer;
 
 class ExploreMarsUseCase
@@ -26,8 +27,9 @@ class ExploreMarsUseCase
 
         $plan = $this->inputToPlanTransformer->transform($input);
 
-        var_dump($plan);
-        die;
-        return true;
+        $mission = new Mission($plan);
+        $mission->simulatePlan();
+
+        return $mission;
     }
 }

@@ -43,6 +43,7 @@ class InputToPlanTransformer
     /**
      * @param array $input
      * @return Plan
+     * @throws \InvalidArgumentException
      */
     public function transform(array $input)
     {
