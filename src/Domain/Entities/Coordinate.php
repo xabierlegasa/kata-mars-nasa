@@ -36,17 +36,23 @@ class Coordinate
         if ($movement->movement() === Movement::MOVE) {
             switch ($position->direction()) {
                 case Direction::NORTH:
-                    return new Coordinate($position->x(), $position->y() + 1);
+                    $coordinate = new Coordinate($position->x(), $position->y() + 1);
+                    break;
                 case Direction::EAST:
-                    return new Coordinate($position->x() + 1, $position->y());
+                    $coordinate = new Coordinate($position->x() + 1, $position->y());
+                    break;
                 case Direction::SOUTH:
-                    return new Coordinate($position->x(), $position->y() - 1);
+                    $coordinate = new Coordinate($position->x(), $position->y() - 1);
+                    break;
                 case Direction::WEST:
-                    return new Coordinate($position->x() - 1, $position->y());
+                    $coordinate = new Coordinate($position->x() - 1, $position->y());
+                    break;
             }
+        } else {
+            $coordinate = $position->coordinate();
         }
 
-        return $position->coordinate();
+        return $coordinate;
     }
 
     /**

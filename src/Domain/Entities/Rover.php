@@ -57,7 +57,7 @@ class Rover
      */
     private function totalPlanedMovements()
     {
-        return count($this->movements);
+        return count($this->movements->movements());
     }
 
     /**
@@ -79,11 +79,27 @@ class Rover
         return $nextPosition;
     }
 
+    /**
+     * @param Position $position
+     * @param Movement $movement
+     * @return Position
+     */
     private function getPositionForNextMovement(Position $position, Movement $movement)
     {
         $coordinate = Coordinate::calculateNextCoordinate($position, $movement);
         $direction = Direction::calculateNextDirection($position->direction(), $movement);
 
         return new Position($coordinate, $direction);
+    }
+
+    public function doNextMovement()
+    {
+        $this->position = $this->getPositionForNextMovement($this->position, $this->getNextMovement());
+        $this->nextMovement++;
+    }
+
+    private function getNextMovement()
+    {
+        return $this->movements->getMovement($this->nextMovement);
     }
 }
