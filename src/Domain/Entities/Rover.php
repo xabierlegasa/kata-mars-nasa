@@ -61,7 +61,7 @@ class Rover
     }
 
     /**
-     * @return Coordinate|void
+     * @return Position
      * @throws \Exception
      */
     public function nextMovementPosition()
@@ -79,6 +79,12 @@ class Rover
         return $nextPosition;
     }
 
+    public function doNextMovement()
+    {
+        $this->position = $this->getPositionForNextMovement($this->position, $this->getNextMovement());
+        $this->nextMovement++;
+    }
+
     /**
      * @param Position $position
      * @param Movement $movement
@@ -92,14 +98,13 @@ class Rover
         return new Position($coordinate, $direction);
     }
 
-    public function doNextMovement()
-    {
-        $this->position = $this->getPositionForNextMovement($this->position, $this->getNextMovement());
-        $this->nextMovement++;
-    }
-
     private function getNextMovement()
     {
         return $this->movements->getMovement($this->nextMovement);
+    }
+
+    public function outputPosition()
+    {
+        return $this->position()->x() . ' ' . $this->position()->y() . ' ' . $this->position()->direction();
     }
 }

@@ -31,21 +31,13 @@ class Mission
         /** @var Rover $rover */
         foreach ($rovers as $rover) {
             while ($rover->hasMovementsToDo()) {
+
+                /** @var Position $position */
                 $position = $rover->nextMovementPosition();
+
+                $rover->doNextMovement();
             }
         }
-        var_dump($rovers);
-        die;
-
-
-
-
-
-
-
-
-
-
 
         $this->state = self::STATE_SIMULATION_SUCCESS;
         return true;
@@ -54,5 +46,21 @@ class Mission
     public function state()
     {
         return $this->state;
+    }
+
+    public function generateOutput()
+    {
+        $output = '';
+
+        /** @var Rover $rover */
+        foreach($this->plan->rovers() as $rover) {
+            if (!empty($output)) {
+                $output .= "\n";
+            }
+
+            $output .= $rover->outputPosition();
+        }
+
+        return $output;
     }
 }
