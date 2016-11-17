@@ -43,7 +43,7 @@ class Mission
 
                 if (!$this->plan->plateau()->coordinatesAreInsidePlateau($position->coordinate())) {
                     $roverNumber = $key + 1;
-                    throw new \Exception('Abort Mission! Rover number ' . $roverNumber
+                    throw new InvalidMissionException('Abort Mission! Rover number ' . $roverNumber
                         . ' would leave the plateau in movement number '
                         . $rover->nextMovementNumber()
                         . ' because grid ' . $position->x() . ',' . $position->y() . ' is out of the plateau');
