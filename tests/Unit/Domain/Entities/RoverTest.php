@@ -12,7 +12,7 @@ use KataMarsNasa\Domain\Entities\RoverMovements;
 
 class RoverTest extends \PHPUnit_Framework_TestCase
 {
-    public function test_rover_calculates_next_movements_coordinates_correctly()
+    public function test_rover_calculats_next_movement_correctly_and_can_navigate_correctly()
     {
         $rover = new Rover(new Position(new Coordinate(4, 4), Direction::NORTH),
                                                 // x y direction
