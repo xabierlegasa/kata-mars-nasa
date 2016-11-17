@@ -6,7 +6,8 @@
         <div class="col-md-12">
 
             {% if error %}
-                {{ error }}
+                <h2>Invalid Mission!</h2>
+                <span class="danger">{{ error }}</span>
             {% else %}
                 <h1 class="app-color">Successful Mission!</h1>
                 <h3>Rovers position after the mission:</h3>
@@ -21,7 +22,6 @@
             <br>
 
             <p><a href="/start">Start a new mission</a></p>
-
 
         </div>
     </div>

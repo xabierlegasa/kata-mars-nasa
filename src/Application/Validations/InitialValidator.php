@@ -7,6 +7,9 @@ class InitialValidator
 {
     public function validate(array $input)
     {
-        return count($input) >= 1 && !(count($input) % 2 === 0);
+        $hasValidNumberOfLines = count($input) >= 1 && !(count($input) % 2 === 0);
+        if (!$hasValidNumberOfLines) {
+            throw new \InvalidArgumentException('The number of lines of the mission is invalid');
+        }
     }
 }

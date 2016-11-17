@@ -76,6 +76,9 @@ class InputToPlanTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $plan->numberOfRovers());
     }
 
+    public function test_when_input_lines_is_invalid_should_throw_tha_correct_exception()
+    {
 
+    }
 }
 

@@ -48,9 +48,7 @@ class InputToPlanTransformer
      */
     public function transform(array $input)
     {
-        if (!$this->initialValidator->validate($input)) {
-            throw new \InvalidArgumentException('Your input is not valid. Check number of lines is correct');
-        }
+        $this->initialValidator->validate($input);
 
         $plateauSizeLine = trim(array_shift($input));
         $plateauSize = $this->inputToPlateauSizeConverter->convert($plateauSizeLine);
