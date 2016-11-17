@@ -17,53 +17,50 @@ class MissionTest extends \PHPUnit_Framework_TestCase
     public function test_a_valid_plan_can_be_simulated()
     {
         $plan = new Plan(new PlateauSize(5, 5));
-        $plan->addRover(
-            new Rover(
-                new Position(new Coordinate(1, 2), 'N'),
-                new RoverMovements(
-                    [
-                        new Movement('L'),
-                        new Movement('M'),
-                        new Movement('L'),
-                        new Movement('M'),
-                        new Movement('L'),
-                        new Movement('M'),
-                        new Movement('L'),
-                        new Movement('M'),
-                        new Movement('M'),
-                    ]
-                )
-            )
-        );
-
-        $plan->addRover(
-            new Rover(
-                new Position(new Coordinate(3, 3), 'E'),
-                new RoverMovements(
-                    [
-                        new Movement('M'),
-                        new Movement('M'),
-                        new Movement('R'),
-                        new Movement('M'),
-                        new Movement('M'),
-                        new Movement('R'),
-                        new Movement('M'),
-                        new Movement('R'),
-                        new Movement('R'),
-                        new Movement('M'),
-                    ]
-                )
-            )
-        );
-
+        $this->addRoverToPlan($plan, 1, 2, 'N', 'LMLMLMLMM');
+        $this->addRoverToPlan($plan, 3, 3, 'E', 'MMRMMRMRRM');
 
         $mission = new Mission($plan);
         $mission->simulatePlan();
 
-        $expectedOutput = <<<XML
-1 3 N
-5 1 E
-XML;
+        $expectedOutput = $this->buildExpectedOutput(
+            [
+                '1 3 N',
+                '5 1 E',
+            ]
+        );
         $this->assertEquals($expectedOutput, $mission->generateOutput());
+    }
+
+    private function addRoverToPlan($plan, $x, $y, $direction, $movements)
+    {
+        foreach (str_split($movements) as $move) {
+            $moves[] = new Movement($move);
+        }
+        $plan->addRover(
+            new Rover(
+                new Position(new Coordinate($x, $y), $direction),
+                new RoverMovements(
+                    $moves
+                )
+            )
+        );
+    }
+
+    /**
+     * @param array $lines
+     * @return string
+     */
+    private function buildExpectedOutput(array $lines)
+    {
+        $output = '';
+        foreach ($lines as $line) {
+            if (!empty($output)) {
+                $output .= "\n";
+            }
+            $output .= $line;
+        }
+
+        return $output;
     }
 }
