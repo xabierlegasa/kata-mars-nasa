@@ -1,0 +1,29 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <form action="/start" id="planForm" method="post">
+
+                <div class="form-group">
+                    <label for="mission">Enter Mission</label>
+                    <textarea class="form-control" id="plan" name="plan" rows="10">5 5
+1 2 N
+LMLMLMLMM
+3 3 E
+MMRMMRMRRM</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">Or upload a file</label>
+                    <input type="file" id="exampleInputFile">
+                </div>
+
+                <br>
+                <br>
+                <button type="submit" class="btn btn-default app-color">Run Mission!</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -12,9 +12,18 @@ PHP >= 7.0
 composer
 
 
-## Run
+## Run the Code
 
+```
 composer install
 composer start
+```
 
 The kata should be running here: http://localhost:8080/
+
+
+## Tests
+
+```
+./vendor/bin/phpunit
+```

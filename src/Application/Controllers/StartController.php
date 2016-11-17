@@ -11,7 +11,7 @@ class StartController extends Controller
 {
     public function getStart(Request $request, Response $response)
     {
-        return $this->view->render($response, 'start.phtml', []);
+        return $this->view->render($response, 'start-mission.twig', []);
     }
 
     public function postStart(Request $request, Response $response)
@@ -23,13 +23,16 @@ class StartController extends Controller
         try {
             /** @var ExploreMarsUseCase $exploreMarsUseCase */
             $exploreMarsUseCase = $this->container->get('ExploreMarsUseCase');
-            $result = $exploreMarsUseCase->execute($inputArray);
+            $mission = $exploreMarsUseCase->execute($inputArray);
 
+            $output = $mission->generateOutput();
+
+            $outputForHTML = str_replace("\n", "<br>", $output);
+            $data = ['output' => $outputForHTML];
         } catch (\Exception $e) {
-            return $this->view->render($response, 'explorationResult.phtml', ['error' => $e->getMessage()]);
-
+            $data = ['error' => $e->getMessage()];
         }
 
-        return $this->view->render($response, 'explorationResult.phtml', []);
+        return $this->view->render($response, 'exploration-result.twig', $data);
     }
 }

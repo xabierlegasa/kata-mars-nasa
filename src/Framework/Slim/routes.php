@@ -6,7 +6,7 @@ $app->get('/', function ($request, $response, $args) {
     $this->logger->info("Slim-Skeleton '/' route");
 
     // Render index view
-    return $this->view->render($response, 'index.phtml', $args);
+    return $this->view->render($response, 'home.twig', $args);
 });
 
 

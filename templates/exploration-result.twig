@@ -1,0 +1,28 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+
+            {% if error %}
+                {{ error }}
+            {% else %}
+                <h1 class="app-color">Successful Mission!</h1>
+                <h3>Rovers position after the mission:</h3>
+                <br>
+                <p>
+                    {{ output | raw }}
+                </p>
+            {% endif %}
+
+            <br>
+            <br>
+            <br>
+
+            <p><a href="/start">Start a new mission</a></p>
+
+
+        </div>
+    </div>
+{% endblock %}
