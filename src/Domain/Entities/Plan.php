@@ -25,6 +25,14 @@ class Plan
         $this->rovers[] = $rover;
     }
 
+    /**
+     * @return Plateau
+     */
+    public function plateau()
+    {
+        return $this->plateau;
+    }
+
     public function plateauSize()
     {
         return $this->plateau->plateauSize();

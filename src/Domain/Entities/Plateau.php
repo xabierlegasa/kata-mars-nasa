@@ -19,6 +19,10 @@ class Plateau
 
     public function coordinatesAreInsidePlateau(Coordinate $coordinate)
     {
-        return true;
+
+        $xIsInside = ($coordinate->x() >= 0) && ($coordinate->x() <= $this->plateauSize()->x());
+        $yIsInside = ($coordinate->y() >= 0) && ($coordinate->y() <= $this->plateauSize()->y());
+
+        return $xIsInside && $yIsInside;
     }
 }

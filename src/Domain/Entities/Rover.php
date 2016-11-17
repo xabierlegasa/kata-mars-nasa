@@ -107,4 +107,9 @@ class Rover
     {
         return $this->position()->x() . ' ' . $this->position()->y() . ' ' . $this->position()->direction();
     }
+
+    public function nextMovementNumber()
+    {
+        return $this->nextMovement;
+    }
 }

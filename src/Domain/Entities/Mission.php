@@ -26,6 +26,10 @@ class Mission
         $this->plan = $plan;
     }
 
+    /**
+     * @return bool
+     * @throws \Exception
+     */
     public function simulatePlan()
     {
         $rovers = $this->plan->rovers();
@@ -37,10 +41,13 @@ class Mission
                 /** @var Position $position */
                 $position = $rover->nextMovementPosition();
 
-//                if (!$position->isInsidePlateau($this->plan->plateauSize())) {
-//                    $roverNumber = $key + 1;
-//                    throw new InvalidMissionException('Rover number ' . $roverNumber . ' will leave the plateau. Abort!');
-//                }
+                if (!$this->plan->plateau()->coordinatesAreInsidePlateau($position->coordinate())) {
+                    $roverNumber = $key + 1;
+                    throw new \Exception('Abort Mission! Rover number ' . $roverNumber
+                        . ' would leave the plateau in movement number '
+                        . $rover->nextMovementNumber()
+                        . ' because grid ' . $position->x() . ',' . $position->y() . ' is out of the plateau');
+                }
 
                 $rover->doNextMovement();
             }
@@ -60,7 +67,7 @@ class Mission
         $output = '';
 
         /** @var Rover $rover */
-        foreach($this->plan->rovers() as $rover) {
+        foreach ($this->plan->rovers() as $rover) {
             if (!empty($output)) {
                 $output .= "\n";
             }
