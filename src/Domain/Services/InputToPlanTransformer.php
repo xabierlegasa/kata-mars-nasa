@@ -5,6 +5,7 @@ namespace KataMarsNasa\Domain\Services;
 
 use KataMarsNasa\Application\Validations\InitialValidator;
 use KataMarsNasa\Domain\Entities\Plan;
+use KataMarsNasa\Domain\Entities\Plateau;
 use KataMarsNasa\Domain\Entities\Rover;
 
 class InputToPlanTransformer
@@ -55,7 +56,7 @@ class InputToPlanTransformer
         $plateauSize = $this->inputToPlateauSizeConverter->convert($plateauSizeLine);
 
 
-        $plan = new Plan($plateauSize);
+        $plan = new Plan(new Plateau($plateauSize));
 
         for ($x = 0; $x < count($input); $x = $x + 2) {
             /** Rovers starting position */

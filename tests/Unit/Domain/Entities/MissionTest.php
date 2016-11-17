@@ -7,6 +7,7 @@ use KataMarsNasa\Domain\Entities\Coordinate;
 use KataMarsNasa\Domain\Entities\Mission;
 use KataMarsNasa\Domain\Entities\Movement;
 use KataMarsNasa\Domain\Entities\Plan;
+use KataMarsNasa\Domain\Entities\Plateau;
 use KataMarsNasa\Domain\Entities\PlateauSize;
 use KataMarsNasa\Domain\Entities\Position;
 use KataMarsNasa\Domain\Entities\Rover;
@@ -16,7 +17,7 @@ class MissionTest extends \PHPUnit_Framework_TestCase
 {
     public function test_a_valid_plan_can_be_simulated()
     {
-        $plan = new Plan(new PlateauSize(5, 5));
+        $plan = new Plan(new Plateau(new PlateauSize(5, 5)));
         $this->addRoverToPlan($plan, 1, 2, 'N', 'LMLMLMLMM');
         $this->addRoverToPlan($plan, 3, 3, 'E', 'MMRMMRMRRM');
 
@@ -31,6 +32,12 @@ class MissionTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals($expectedOutput, $mission->generateOutput());
     }
+
+    public function test_when_a_rover_is_leaving_the_plateau_should_throw_an_exception()
+    {
+
+    }
+
 
     private function addRoverToPlan($plan, $x, $y, $direction, $movements)
     {
@@ -47,10 +54,6 @@ class MissionTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @param array $lines
-     * @return string
-     */
     private function buildExpectedOutput(array $lines)
     {
         $output = '';

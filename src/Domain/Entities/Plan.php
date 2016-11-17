@@ -5,19 +5,19 @@ namespace KataMarsNasa\Domain\Entities;
 
 class Plan
 {
-    /** @var PlateauSize  */
-    private $plateauSize;
+    /** @var Plateau  */
+    private $plateau;
 
     /**@var array An array of Rover objects */
     private $rovers;
 
     /**
      * Plan constructor.
-     * @param PlateauSize $plateauSize
+     * @param Plateau $plateau
      */
-    public function __construct(PlateauSize $plateauSize)
+    public function __construct(Plateau $plateau)
     {
-        $this->plateauSize = $plateauSize;
+        $this->plateau = $plateau;
     }
 
     public function addRover(Rover $rover)
@@ -27,7 +27,7 @@ class Plan
 
     public function plateauSize()
     {
-        return $this->plateauSize;
+        return $this->plateau->plateauSize();
     }
 
     public function rovers()

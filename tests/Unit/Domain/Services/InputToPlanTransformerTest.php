@@ -68,7 +68,6 @@ class InputToPlanTransformerTest extends \PHPUnit_Framework_TestCase
         $this->inputToRoverMovementsConverter->convert('RLM')->shouldBeCalled()
             ->willReturn(new RoverMovements([new Movement('R'), new Movement('L'), new Movement('M')]));
 
-
         /** @var Plan $plan */
         $plan = $this->sut->transform($input);
 

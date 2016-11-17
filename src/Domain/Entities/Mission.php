@@ -3,6 +3,8 @@
 namespace KataMarsNasa\Domain\Entities;
 
 
+use KataMarsNasa\Domain\Exceptions\InvalidMissionException;
+
 class Mission
 {
     const STATE_READY = 'ready';
@@ -29,11 +31,16 @@ class Mission
         $rovers = $this->plan->rovers();
 
         /** @var Rover $rover */
-        foreach ($rovers as $rover) {
+        foreach ($rovers as $key => $rover) {
             while ($rover->hasMovementsToDo()) {
 
                 /** @var Position $position */
                 $position = $rover->nextMovementPosition();
+
+//                if (!$position->isInsidePlateau($this->plan->plateauSize())) {
+//                    $roverNumber = $key + 1;
+//                    throw new InvalidMissionException('Rover number ' . $roverNumber . ' will leave the plateau. Abort!');
+//                }
 
                 $rover->doNextMovement();
             }
