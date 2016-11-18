@@ -4,6 +4,7 @@ namespace Unit\Domain\Services;
 
 
 use KataMarsNasa\Application\Validations\InitialValidator;
+use KataMarsNasa\Application\Validations\PlanOverlappingValidator;
 use KataMarsNasa\Domain\Entities\Coordinate;
 use KataMarsNasa\Domain\Entities\Movement;
 use KataMarsNasa\Domain\Entities\Plan;
@@ -14,6 +15,8 @@ use KataMarsNasa\Domain\Services\InputToPlanTransformer;
 use KataMarsNasa\Domain\Services\InputToPlateauSizeConverter;
 use KataMarsNasa\Domain\Services\InputToRoverMovementsConverter;
 use KataMarsNasa\Domain\Services\InputToRoversPositionConverter;
+use Prophecy\Argument;
+use Prophecy\Exception\Exception;
 
 class InputToPlanTransformerTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,6 +25,9 @@ class InputToPlanTransformerTest extends \PHPUnit_Framework_TestCase
 
     /** @var InitialValidator */
     private $initialValidator;
+
+    /** @var PlanOverlappingValidator */
+    private $planOverlappingValidator;
 
     /** @var InputToPlateauSizeConverter */
     private $inputToPlateauSizeConverter;
@@ -35,12 +41,14 @@ class InputToPlanTransformerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->initialValidator = $this->prophesize(InitialValidator::class);
+        $this->planOverlappingValidator = $this->prophesize(PlanOverlappingValidator::class);
         $this->inputToPlateauSizeConverter = $this->prophesize(InputToPlateauSizeConverter::class);
         $this->inputToRoversPositionConverter = $this->prophesize(InputToRoversPositionConverter::class);
         $this->inputToRoverMovementsConverter = $this->prophesize(InputToRoverMovementsConverter::class);
 
         $this->sut = new InputToPlanTransformer(
             $this->initialValidator->reveal(),
+            $this->planOverlappingValidator->reveal(),
             $this->inputToPlateauSizeConverter->reveal(),
             $this->inputToRoversPositionConverter->reveal(),
             $this->inputToRoverMovementsConverter->reveal()
@@ -55,6 +63,10 @@ class InputToPlanTransformerTest extends \PHPUnit_Framework_TestCase
             'RLM'
         ];
         $this->initialValidator->validate($input)
+            ->shouldBeCalled()
+            ->willReturn(true);
+
+        $this->planOverlappingValidator->validate(Argument::any())
             ->shouldBeCalled()
             ->willReturn(true);
 
@@ -76,9 +88,36 @@ class InputToPlanTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $plan->numberOfRovers());
     }
 
-    public function test_when_input_lines_is_invalid_should_throw_tha_correct_exception()
-    {
 
+    public function test_when_rover_overlap_should_throw_an_exception()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('exception message');
+
+        $input = [
+            '5 6',
+            '1 2 N',
+            'RLM'
+        ];
+        $this->initialValidator->validate($input)
+            ->shouldBeCalled()
+            ->willReturn(true);
+
+        $this->planOverlappingValidator->validate(Argument::any())
+            ->shouldBeCalled()
+            ->willThrow(new \Exception('exception message'));
+
+        $plateauSize = new PlateauSize(5, 6);
+        $this->inputToPlateauSizeConverter->convert('5 6')
+            ->shouldBeCalled()
+            ->willReturn($plateauSize);
+
+        $this->inputToRoversPositionConverter->convert('1 2 N', $plateauSize)->shouldBeCalled()
+            ->willReturn(new Position(new Coordinate(1, 2), 'N'));
+        $this->inputToRoverMovementsConverter->convert('RLM')->shouldBeCalled()
+            ->willReturn(new RoverMovements([new Movement('R'), new Movement('L'), new Movement('M')]));
+
+        $this->sut->transform($input);
     }
 }
 

@@ -4,6 +4,7 @@ namespace KataMarsNasa\Domain\Services;
 
 
 use KataMarsNasa\Application\Validations\InitialValidator;
+use KataMarsNasa\Application\Validations\PlanOverlappingValidator;
 use KataMarsNasa\Domain\Entities\Plan;
 use KataMarsNasa\Domain\Entities\Plateau;
 use KataMarsNasa\Domain\Entities\Rover;
@@ -14,6 +15,12 @@ class InputToPlanTransformer
      * @var InitialValidator
      */
     private $initialValidator;
+
+    /**
+     * @var PlanOverlappingValidator
+     */
+    private $planOverlappingValidator;
+
     /**
      * @var InputToPlateauSizeConverter
      */
@@ -25,17 +32,20 @@ class InputToPlanTransformer
     /**
      * InputToPlanTransformer constructor.
      * @param InitialValidator $initialValidator
+     * @param PlanOverlappingValidator $planOverlappingValidator
      * @param InputToPlateauSizeConverter $inputToPlateauSizeConverter
      * @param InputToRoversPositionConverter $inputToRoversPositionConverter
      * @param InputToRoverMovementsConverter $inputToRoverMovementsConverter
      */
     public function __construct(
         InitialValidator $initialValidator,
+        PlanOverlappingValidator $planOverlappingValidator,
         InputToPlateauSizeConverter $inputToPlateauSizeConverter,
         InputToRoversPositionConverter $inputToRoversPositionConverter,
         InputToRoverMovementsConverter $inputToRoverMovementsConverter
     ) {
         $this->initialValidator = $initialValidator;
+        $this->planOverlappingValidator = $planOverlappingValidator;
         $this->inputToPlateauSizeConverter = $inputToPlateauSizeConverter;
         $this->inputToRoversPositionConverter = $inputToRoversPositionConverter;
         $this->inputToRoverMovementsConverter = $inputToRoverMovementsConverter;
@@ -66,6 +76,8 @@ class InputToPlanTransformer
             $rover = new Rover($position, $movements);
             $plan->addRover($rover);
         }
+
+        $this->planOverlappingValidator->validate($plan);
 
         return $plan;
     }

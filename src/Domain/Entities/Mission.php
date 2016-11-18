@@ -3,6 +3,7 @@
 namespace KataMarsNasa\Domain\Entities;
 
 
+use KataMarsNasa\Application\Validations\PlanOverlappingValidator;
 use KataMarsNasa\Domain\Exceptions\InvalidMissionException;
 
 class Mission
@@ -21,9 +22,18 @@ class Mission
     /** @var string */
     private $state;
 
-    public function __construct(Plan $plan)
+    /** @var PlanOverlappingValidator */
+    private $PlanOverlappingValidator;
+
+    /**
+     * Mission constructor.
+     * @param Plan $plan
+     * @param PlanOverlappingValidator $planOverlappingValidator
+     */
+    public function __construct(Plan $plan, PlanOverlappingValidator $planOverlappingValidator)
     {
         $this->plan = $plan;
+        $this->planOverlappingValidator = $planOverlappingValidator;
     }
 
     /**
@@ -32,6 +42,8 @@ class Mission
      */
     public function simulatePlan()
     {
+        $this->planOverlappingValidator->validate($this->plan);
+
         $rovers = $this->plan->rovers();
 
         /** @var Rover $rover */

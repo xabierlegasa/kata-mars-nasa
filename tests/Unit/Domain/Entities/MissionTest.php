@@ -3,6 +3,7 @@
 namespace Unit\Domain\Entities;
 
 
+use KataMarsNasa\Application\Validations\PlanOverlappingValidator;
 use KataMarsNasa\Domain\Entities\Coordinate;
 use KataMarsNasa\Domain\Entities\Mission;
 use KataMarsNasa\Domain\Entities\Movement;
@@ -22,7 +23,7 @@ class MissionTest extends \PHPUnit_Framework_TestCase
         $this->addRoverToPlan($plan, 1, 2, 'N', 'LMLMLMLMM');
         $this->addRoverToPlan($plan, 3, 3, 'E', 'MMRMMRMRRM');
 
-        $mission = new Mission($plan);
+        $mission = new Mission($plan, new PlanOverlappingValidator());
         $mission->simulatePlan();
 
         $expectedOutput = $this->buildExpectedOutput(
@@ -43,7 +44,21 @@ class MissionTest extends \PHPUnit_Framework_TestCase
         $this->addRoverToPlan($plan, 1, 2, 'N', 'LMLMLMLMM');
         $this->addRoverToPlan($plan, 1, 1, 'W', 'MM');
 
-        $mission = new Mission($plan);
+        $mission = new Mission($plan, new PlanOverlappingValidator());
+        $mission->simulatePlan();
+    }
+
+    public function test_when_rovers_overlap_each_other_on_initial_position_should_throw_correct_exception()
+    {
+        $this->expectException(InvalidMissionException::class);
+        $this->expectExceptionMessage('There are two rovers in the same grid: Rover 2 overlaps with rover number 1');
+
+        $plan = new Plan(new Plateau(new PlateauSize(5, 5)));
+        $this->addRoverToPlan($plan, 1, 2, 'N', 'LMLMLMLMM');
+        $this->addRoverToPlan($plan, 1, 1, 'E', 'MM');
+        $this->addRoverToPlan($plan, 1, 1, 'N', 'M');
+
+        $mission = new Mission($plan, new PlanOverlappingValidator());
         $mission->simulatePlan();
     }
 
