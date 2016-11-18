@@ -4,4 +4,13 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true" addUncoveredFilesFromWhitelist="false">
+            <directory suffix=".php">./src</directory>
+            <exclude>
+                <directory>src/Framework/Slim</directory>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>

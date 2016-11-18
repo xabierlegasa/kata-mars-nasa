@@ -31,6 +31,20 @@ class PlateauTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function test_whe_plateau_is_explored_explored_percentage_is_calculated_correctly()
+    {
+        $plateau = new Plateau(new PlateauSize(3, 3));
+        $this->assertEquals(0, $plateau->getExploredPercentage());
+        $plateau->marcCoordinateAsExplored(new Coordinate(0,0));
+        $this->assertEquals(6.25, $plateau->getExploredPercentage());
+        $plateau->marcCoordinateAsExplored(new Coordinate(1,0));
+        $this->assertEquals(12.5, $plateau->getExploredPercentage());
+        $plateau->marcCoordinateAsExplored(new Coordinate(2,0));
+        $this->assertEquals(18.75, $plateau->getExploredPercentage());
+        $plateau->marcCoordinateAsExplored(new Coordinate(3,0));
+        $this->assertEquals(25, $plateau->getExploredPercentage());
+    }
+
     public static function inputProvider()
     {
         return [

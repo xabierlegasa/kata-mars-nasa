@@ -54,7 +54,7 @@ class Plateau
      */
     public function getExploredPercentage()
     {
-        $totalGrids = $this->plateauSize()->x() * $this->plateauSize()->y();
+        $totalGrids = ($this->plateauSize()->x() + 1)  * ($this->plateauSize()->y() + 1);
 
         $explored = 0;
         for ($x = 0; $x <= $this->plateauSize()->x(); $x++) {
@@ -65,7 +65,7 @@ class Plateau
             }
         }
 
-        return 100 * $explored / $totalGrids;
+        return number_format(100 * $explored / $totalGrids, 2);
     }
 
 }
