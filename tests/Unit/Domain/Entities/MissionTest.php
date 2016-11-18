@@ -38,7 +38,7 @@ class MissionTest extends \PHPUnit_Framework_TestCase
     public function test_when_a_rover_is_leaving_the_plateau_should_throw_an_exception()
     {
         $this->expectException(InvalidMissionException::class);
-        $this->expectExceptionMessage('Abort Mission! Rover number 2 would leave the plateau in movement number 1 because grid -1,1 is out of the plateau');
+        $this->expectExceptionMessage('Rover number 2 would leave the plateau in movement number 1 because grid -1,1 is out of the plateau');
 
         $plan = new Plan(new Plateau(new PlateauSize(5, 5)));
         $this->addRoverToPlan($plan, 1, 2, 'N', 'LMLMLMLMM');

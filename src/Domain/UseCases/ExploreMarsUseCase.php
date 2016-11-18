@@ -29,7 +29,7 @@ class ExploreMarsUseCase
         $this->planOverlappingValidator = $planOverlappingValidator;
     }
 
-    public function execute(array $input)
+    public function execute(array $input = [])
     {
 
         $plan = $this->inputToPlanTransformer->transform($input);

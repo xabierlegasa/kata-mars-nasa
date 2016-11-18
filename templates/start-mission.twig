@@ -3,12 +3,16 @@
 {% block content %}
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
 
-            <form action="/start" id="planForm" method="post">
+            <p>Input the mission manually, OR upload a file.</p>
+
+            <br>
+
+            <form action="/start" id="planForm" method="post" enctype="multipart/form-data">
 
                 <div class="form-group">
-                    <label for="mission">Enter Mission</label>
+                    <label for="plan">Manual input</label>
                     <textarea class="form-control" id="plan" name="plan" rows="10">5 5
 1 2 N
 LMLMLMLMM
@@ -16,8 +20,8 @@ LMLMLMLMM
 MMRMMRMRRM</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputFile">Or upload a file</label>
-                    <input type="file" id="exampleInputFile">
+                    <label for="planFile">OR upload a file</label>
+                    <input type="file" name="planFile">
                 </div>
 
                 <br>
