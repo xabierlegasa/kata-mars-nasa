@@ -27,9 +27,10 @@ class StartController extends Controller
             $mission = $exploreMarsUseCase->execute($inputArray);
 
             $output = $mission->generateOutput();
+            $exploredPercentage = $mission->plan()->plateau()->getExploredPercentage();
 
             $outputForHTML = str_replace("\n", "<br>", $output);
-            $data = ['output' => $outputForHTML];
+            $data = ['output' => $outputForHTML, 'explored_percentage' => $exploredPercentage];
         } catch (\Exception $e) {
             $data = ['error' => $e->getMessage()];
         }
@@ -42,7 +43,7 @@ class StartController extends Controller
         $plainText = $request->getParam('plan');
 
         $fileText = $this->getTextFromFileIfExists($request);
-        
+
         if (empty($plainText) && empty($fileText)) {
             throw new \Exception('Introduce a file or a text with the plan plese');
         }

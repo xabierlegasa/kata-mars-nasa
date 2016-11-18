@@ -22,9 +22,6 @@ class Mission
     /** @var string */
     private $state;
 
-    /** @var PlanOverlappingValidator */
-    private $PlanOverlappingValidator;
-
     /**
      * Mission constructor.
      * @param Plan $plan
@@ -62,6 +59,10 @@ class Mission
                 }
 
                 $rover->doNextMovement();
+
+                $this->plan->plateau()->marcCoordinateAsExplored(
+                    $rover->position()->coordinate()
+                );
             }
         }
 
@@ -72,6 +73,14 @@ class Mission
     public function state()
     {
         return $this->state;
+    }
+
+    /**
+     * @return Plan
+     */
+    public function plan()
+    {
+        return $this->plan;
     }
 
     public function generateOutput()
