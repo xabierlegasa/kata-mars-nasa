@@ -51,7 +51,7 @@ class MissionTest extends \PHPUnit_Framework_TestCase
     public function test_when_rovers_overlap_each_other_on_initial_position_should_throw_correct_exception()
     {
         $this->expectException(InvalidMissionException::class);
-        $this->expectExceptionMessage('There are two rovers in the same grid: Rover 2 overlaps with rover number 1');
+        $this->expectExceptionMessage('There are two rovers in the same grid: Rover 2 overlaps with rover 1');
 
         $plan = new Plan(new Plateau(new PlateauSize(5, 5)));
         $this->addRoverToPlan($plan, 1, 2, 'N', 'LMLMLMLMM');

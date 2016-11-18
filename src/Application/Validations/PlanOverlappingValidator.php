@@ -23,7 +23,7 @@ class PlanOverlappingValidator
             $roverCoordinate = $rover->position()->coordinate();
             $overlapsWithRoverNumber = $this->thereIsARoverInCoordinate($roverCoordinate, $coordinatesWithRovers);
             if (0 !== $overlapsWithRoverNumber) {
-                throw new InvalidMissionException('There are two rovers in the same grid: Rover ' . $roverNum . ' overlaps with rover number ' . $overlapsWithRoverNumber);
+                throw new InvalidMissionException('There are two rovers in the same grid: Rover ' . $roverNum . ' overlaps with rover ' . $overlapsWithRoverNumber);
             }
             $coordinatesWithRovers[] = $roverCoordinate;
         }

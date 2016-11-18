@@ -4,6 +4,7 @@
 use KataMarsNasa\Application\Controllers\StartController;
 use KataMarsNasa\Application\Validations\CoordinateValidator;
 use KataMarsNasa\Application\Validations\InitialValidator;
+use KataMarsNasa\Application\Validations\PlanOverlappingValidator;
 use KataMarsNasa\Application\Validations\RoversMovementsValidator;
 use KataMarsNasa\Application\Validations\RoversPositionValidator;
 use KataMarsNasa\Domain\Services\InputToPlanTransformer;
@@ -45,6 +46,9 @@ $container['StartController'] = function ($c) {
 $container['InitialValidator'] = function ($c) {
     return new InitialValidator();
 };
+$container['PlanOverlappingValidator'] = function ($c) {
+    return new PlanOverlappingValidator();
+};
 $container['CoordinateValidator'] = function ($c) {
     return new CoordinateValidator();
 };
@@ -58,6 +62,7 @@ $container['RoversPositionValidator'] = function ($c) {
 $container['InputToPlanTransformer'] = function ($c) {
     return new InputToPlanTransformer(
         $c->get('InitialValidator'),
+        $c->get('PlanOverlappingValidator'),
         $c->get('InputToPlateauSizeConverter'),
         $c->get('InputToRoversPositionConverter'),
         $c->get('InputToRoverMovementsConverter')
@@ -66,7 +71,8 @@ $container['InputToPlanTransformer'] = function ($c) {
 
 $container['ExploreMarsUseCase'] = function ($c) {
     return new ExploreMarsUseCase(
-        $c->get('InputToPlanTransformer')
+        $c->get('InputToPlanTransformer'),
+        $c->get('PlanOverlappingValidator')
     );
 };
 
